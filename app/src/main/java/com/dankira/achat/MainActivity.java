@@ -24,22 +24,27 @@ public class MainActivity extends AppCompatActivity
         getTokenForAccountCreateIfNeeded(AccountGeneral.ACCOUNT_TYPE, AccountGeneral.AUTHTOKEN_TYYPE_FULL_ACCESS);
     }
 
-    private void getTokenForAccountCreateIfNeeded(String accountType, String authTokenType)
+    private AccountManagerFuture<Bundle> getTokenForAccountCreateIfNeeded(String accountType, String authTokenType)
     {
+        //This method may be called from any thread, but the returned AccountManagerFuture must not be used on the main thread.
         final AccountManagerFuture<Bundle> future = accountManager.getAuthTokenByFeatures(accountType, authTokenType, null, this, null, null,
                 new AccountManagerCallback<Bundle>()
                 {
                     @Override
-                    public void run(AccountManagerFuture<Bundle> future)
+                    public void run(AccountManagerFuture<Bundle> futureBundle)
                     {
-                        Bundle bnd = null;
+                        if(futureBundle.isCancelled())
+                        {
+                            MainActivity.this.finish();
+                            return;
+                        }
+                        Bundle resultBundle;
                         try
                         {
-                            bnd = future.getResult();
-                            final String authtoken = bnd.getString(AccountManager.KEY_AUTHTOKEN);
+                            resultBundle = futureBundle.getResult();
+                            final String authToken = resultBundle.getString(AccountManager.KEY_AUTHTOKEN);
 
-                            Log.d(LOG_TAG, ((authtoken != null) ? "SUCCESS!\ntoken: " + authtoken : "FAIL"));
-
+                            Log.d(LOG_TAG, ((authToken != null) ? "SUCCESS!\ntoken: " + authToken : "FAIL"));
                         }
                         catch (Exception e)
                         {
@@ -49,5 +54,6 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
                 , null);
+        return future;
     }
 }

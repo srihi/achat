@@ -94,6 +94,17 @@ public class AchatAuthenticatorActivity extends AccountAuthenticatorActivity
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        intent.putExtras(bundle);
+        setAccountAuthenticatorResult(null);
+        setResult(RESULT_OK,intent);
+        finish();
+    }
+
     private void submit()
     {
         final String userEmail = ((TextView) findViewById(R.id.txtUserEmail)).getText().toString().trim();
