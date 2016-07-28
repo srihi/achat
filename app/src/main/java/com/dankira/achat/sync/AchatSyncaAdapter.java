@@ -13,6 +13,7 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.dankira.achat.account.AccountGeneral;
 import com.dankira.achat.api.ServiceGenerator;
 import com.dankira.achat.api.ShoppingItem_DTO;
 import com.dankira.achat.api.ShoppingList_DTO;

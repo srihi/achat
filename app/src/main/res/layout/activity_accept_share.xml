@@ -8,7 +8,7 @@
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="com.dankira.achat.AcceptShareActivity">
+              tools:context="com.dankira.achat.views.AcceptShareActivity">
 
     <Button
         android:id="@+id/btn_scan_qr_code"

@@ -1,4 +1,4 @@
-package com.dankira.achat;
+package com.dankira.achat.views;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dankira.achat.R;
 import com.dankira.achat.adapters.ItemClickSupport;
 import com.dankira.achat.adapters.ShoppingItemCursorAdapter;
 import com.dankira.achat.models.ShoppingItem;

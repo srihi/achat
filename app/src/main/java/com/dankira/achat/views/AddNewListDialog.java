@@ -1,4 +1,4 @@
-package com.dankira.achat;
+package com.dankira.achat.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,33 +10,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.dankira.achat.OnDialogSubmitListener;
+import com.dankira.achat.R;
 import com.dankira.achat.models.ShoppingList;
 
-public class EditListDialog extends DialogFragment
+public class AddNewListDialog extends DialogFragment
 {
-    private static final String ARG_LIST_KEY = "arg_list_key";
     EditText editListTitle;
     EditText editListDesc;
     Button btnSubmit;
-    private ShoppingList currentShoppingList;
-
-    public static EditListDialog newInstance(ShoppingList shoppingList)
-    {
-        EditListDialog instance = new EditListDialog();
-
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_LIST_KEY, shoppingList);
-
-        instance.setArguments(args);
-        return instance;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        currentShoppingList = (ShoppingList) getArguments().getSerializable(ARG_LIST_KEY);
-    }
 
     @Nullable
     @Override
@@ -55,13 +37,27 @@ public class EditListDialog extends DialogFragment
             @Override
             public void onClick(View view)
             {
-                EditListDialog.this.dismiss();
+
+                ShoppingList list = new ShoppingList();
+                list.setListTitle(editListTitle.getText().toString().trim());
+                list.setListDesc(editListDesc.getText().toString().trim());
+                OnDialogSubmitListener activity = (OnDialogSubmitListener) getActivity();
+
+                // TODO: 7/25/2016 Submit the new list to the api and sync right away
+
+                if (activity != null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("new_list_item", list);
+                    activity.OnDialogSubmit(bundle);
+                }
+
+                AddNewListDialog.this.dismiss();
             }
         });
 
-        editListTitle.setText(currentShoppingList.getListTitle());
-        editListDesc.setText(currentShoppingList.getListDesc());
-
         return rootView;
     }
+
+
 }

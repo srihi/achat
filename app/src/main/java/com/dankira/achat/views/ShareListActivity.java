@@ -1,4 +1,4 @@
-package com.dankira.achat;
+package com.dankira.achat.views;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dankira.achat.R;
+import com.dankira.achat.ShareCodeHelper;
 import com.dankira.achat.api.ServiceGenerator;
 import com.dankira.achat.api.WebApiEndPointInterface;
-import com.dankira.achat.sync.AccountGeneral;
+import com.dankira.achat.account.AccountGeneral;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.dankira.achat;
+package com.dankira.achat.views;
 
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.dankira.achat.sync.AccountGeneral;
+import com.dankira.achat.account.AccountGeneral;
 
 /**
  * Created by da on 7/28/2016.

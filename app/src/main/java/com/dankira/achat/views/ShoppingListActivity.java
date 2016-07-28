@@ -1,6 +1,8 @@
-package com.dankira.achat;
+package com.dankira.achat.views;
 
 import android.os.Bundle;
+
+import com.dankira.achat.R;
 
 public class ShoppingListActivity extends SecuredAppCompatActivityBase
 {

@@ -33,7 +33,7 @@ public class AchatDbContracts
         public static final String LIST_SHARE_STATUS = "list_share_status";
         public static final String LIST_CREATED_ON = "list_created_on";
         public static final String CREATE_SQL = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "( " +
-                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT " +
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 LIST_TITLE + " TEXT UNIQUE NOT NULL, " +
                 LIST_DESCRIPTION + " TEXT, " +
                 LIST_CREATED_ON + " TEXT DEFAULT CURRENT_TIMESTAMP, " +
@@ -91,7 +91,7 @@ public class AchatDbContracts
                 ITEM_CREATED_ON + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
                 ITEM_IMAGE + " BLOB, " +
                 " FOREIGN KEY (" + ID_ShoppingList + ") REFERENCES " +
-                ShoppingListTable.TABLE_NAME + " ( " + ShoppingListTable._ID + " ), " +
+                ShoppingListTable.TABLE_NAME + " ( " + ShoppingListTable._ID + " ) " +
                 " )";
 
         public static final String DEFAULT_SORT_ORDER = _ID + " ASC";

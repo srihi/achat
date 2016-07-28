@@ -1,4 +1,4 @@
-package com.dankira.achat;
+package com.dankira.achat.views;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dankira.achat.OnDialogSubmitListener;
+import com.dankira.achat.R;
 import com.dankira.achat.adapters.ItemClickSupport;
 import com.dankira.achat.adapters.ShoppingListCursorAdapter;
 import com.dankira.achat.provider.AchatDbContracts;

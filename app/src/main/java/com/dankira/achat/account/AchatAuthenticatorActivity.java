@@ -1,4 +1,4 @@
-package com.dankira.achat.sync;
+package com.dankira.achat.account;
 
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dankira.achat.R;
-import com.dankira.achat.RegisterActivity;
+import com.dankira.achat.views.RegisterActivity;
 import com.dankira.achat.api.ServiceGenerator;
 import com.dankira.achat.api.UserCredentials;
 import com.dankira.achat.api.UserProfile;

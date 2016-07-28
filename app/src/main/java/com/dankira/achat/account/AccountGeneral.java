@@ -1,4 +1,4 @@
-package com.dankira.achat.sync;
+package com.dankira.achat.account;
 
 /**
  * Created by da on 7/20/2016.

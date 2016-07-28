@@ -1,4 +1,4 @@
-package com.dankira.achat;
+package com.dankira.achat.views;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -12,10 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.dankira.achat.R;
 import com.dankira.achat.api.ServiceGenerator;
 import com.dankira.achat.api.ShareStatus;
 import com.dankira.achat.api.WebApiEndPointInterface;
-import com.dankira.achat.sync.AccountGeneral;
+import com.dankira.achat.account.AccountGeneral;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -108,7 +109,7 @@ public class AcceptShareActivity extends SecuredAppCompatActivityBase
 
                 if (verified.isShareSucceeded())
                 {
-                    Intent intent = new Intent(this, MainActivity.class);
+                    Intent intent = new Intent(this, ShoppingListActivity.class);
                     startActivity(intent);
                 }
             }

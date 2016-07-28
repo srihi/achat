@@ -1,4 +1,4 @@
-package com.dankira.achat.sync;
+package com.dankira.achat.account;
 
 import android.app.Service;
 import android.content.Intent;

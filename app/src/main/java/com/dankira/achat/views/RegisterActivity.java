@@ -1,4 +1,4 @@
-package com.dankira.achat;
+package com.dankira.achat.views;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.dankira.achat.sync.AchatAuthenticatorActivity;
+import com.dankira.achat.R;
+import com.dankira.achat.account.AchatAuthenticatorActivity;
 
 public class RegisterActivity extends AppCompatActivity
 {
