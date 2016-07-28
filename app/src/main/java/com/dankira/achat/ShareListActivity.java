@@ -5,7 +5,6 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +19,7 @@ import java.io.IOException;
 
 import retrofit2.Call;
 
-public class ShareListActivity extends AppCompatActivity
+public class ShareListActivity extends SecuredAppCompatActivityBase
 {
 
     private ImageView imgQRCode;

@@ -1,9 +1,8 @@
 package com.dankira.achat;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-public class ShoppingListActivity extends AppCompatActivity
+public class ShoppingListActivity extends SecuredAppCompatActivityBase
 {
 
     private static final String SL_DETAIL_FRAGMENT_TAG = "SLDETAILSFRAG";
