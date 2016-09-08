@@ -9,10 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.dankira.achat.api.LoginResponse;
 import com.dankira.achat.api.ServiceGenerator;
 import com.dankira.achat.api.UserCredentials;
-import com.dankira.achat.api.UserProfile;
 import com.dankira.achat.api.WebApiEndPointInterface;
 
 import java.io.IOException;
@@ -68,23 +69,23 @@ public class AchatAuthenticator extends AbstractAccountAuthenticator
             final String password = accountManager.getPassword(account);
             if (password != null)
             {
-                WebApiEndPointInterface apiInterface = ServiceGenerator.createService(WebApiEndPointInterface.class);
-                Call<UserProfile> apiCall = apiInterface.loginUser(new UserCredentials(account.name, password));
+                WebApiEndPointInterface apiInterface = ServiceGenerator.createService(WebApiEndPointInterface.class,
+                        AccountGeneral.API_KEY);
+                Call<LoginResponse> apiCall = apiInterface.loginUser(new UserCredentials(account.name, password));
 
                 try
                 {
-                    UserProfile userProfile = apiCall.execute().body();
-                    authToken =  userProfile.getAuthToken();
+                    LoginResponse loginResponse = apiCall.execute().body();
+                    authToken = loginResponse.access_token;
                 }
                 catch (IOException e)
                 {
-                    e.printStackTrace();
+                    Log.e(LOG_TAG, "An exception occurred while executing login with API." +e.getMessage());
                 }
-
             }
         }
 
-        if(!TextUtils.isEmpty(authToken))
+        if (!TextUtils.isEmpty(authToken))
         {
             final Bundle result = new Bundle();
             result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);

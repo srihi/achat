@@ -6,20 +6,64 @@ package com.dankira.achat.api;
 public class ShoppingList_DTO
 {
     private long id;
-    private String name;
-    private String description;
-    private String createdOn;
+    private String list_guid;
+    private String user_guid;
+    private String list_title;
+    private String list_description;
+    private String created_on;
+    private int item_count;
+    private boolean share_status;
 
     public ShoppingList_DTO()
     {
     }
 
-    public ShoppingList_DTO(long id, String name, String description, String createdOn)
+    public ShoppingList_DTO(long id, String list_guid, String user_guid, String list_title,
+                            String list_description, String created_on, int item_count, boolean share_status)
     {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.createdOn = createdOn;
+        this.list_guid = list_guid;
+        this.user_guid = user_guid;
+        this.list_title = list_title;
+        this.list_description = list_description;
+        this.created_on = created_on;
+        this.item_count = item_count;
+        this.share_status = share_status;
+    }
+
+    public String getList_guid()
+    {
+        return list_guid;
+    }
+
+    public String getUser_guid()
+    {
+        return user_guid;
+    }
+
+    public boolean getShare_Status()
+    {
+        return share_status;
+    }
+
+    public void setList_guid(String list_guid)
+    {
+        this.list_guid = list_guid;
+    }
+
+    public void setUser_guid(String user_guid)
+    {
+        this.user_guid = user_guid;
+    }
+
+    public void setItem_count(int item_count)
+    {
+        this.item_count = item_count;
+    }
+
+    public void setShare_status(boolean share_status)
+    {
+        this.share_status = share_status;
     }
 
     public long getId()
@@ -32,34 +76,43 @@ public class ShoppingList_DTO
         this.id = id;
     }
 
-    public String getName()
+    public String getList_title()
     {
-        return name;
+        return list_title;
     }
 
-    public void setName(String name)
+    public void setList_title(String list_title)
     {
-        this.name = name;
+        this.list_title = list_title;
     }
 
-    public String getDescription()
+    public String getList_description()
     {
-        return description;
+        return list_description;
     }
 
-    public void setDescription(String description)
+    public void setList_description(String list_description)
     {
-        this.description = description;
+        this.list_description = list_description;
     }
 
-    public String getCreatedOn()
+    public String getCreated_on()
     {
-        return createdOn;
+        return created_on;
     }
 
-    public void setCreatedOn(String createdOn)
+    public void setCreated_on(String created_on)
     {
-        this.createdOn = createdOn;
+        this.created_on = created_on;
     }
 
+    public int getItem_count()
+    {
+        return item_count;
+    }
+
+    public boolean isShare_status()
+    {
+        return share_status;
+    }
 }

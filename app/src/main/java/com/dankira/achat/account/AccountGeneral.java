@@ -5,6 +5,7 @@ package com.dankira.achat.account;
  */
 public class AccountGeneral
 {
+    public static final String API_KEY = "L37Iv0xi5JcF349DzEyj49MIFofYUcDAlOLp8HbtiIQ";
     public static final String ACCOUNT_TYPE = "com.dankira.achat";
     public static final String ACCOUNT_NAME = "Achat";
 

@@ -6,49 +6,34 @@ package com.dankira.achat.api;
 public class ShoppingItem_DTO
 {
     private long id;
-    private long shoppingListId;
-    private String name;
-    private String description;
-    private int quantity;
-    private int checked;
-    private String image;
-    private String group;
-    private String createdOn;
-    private String updatedOn;
+    private String list_guid;
+    private String item_title;
+    private String item_description;
+    private int item_quantity;
+    private boolean item_checked;
+    private String item_group;
+    private String item_created_on;
+    private String item_updated_on;
+    private String item_bar_code;
 
     public ShoppingItem_DTO()
     {
     }
 
-    public ShoppingItem_DTO(long id, long shoppingListId, String name, String description,
-                            int quantity, int checked, String image, String group, String createdOn,
-                            String updatedOn)
+    public ShoppingItem_DTO(long id, String shoppingListId, String name, String item_description,
+                            int item_quantity, boolean item_checked, String item_group, String item_created_on,
+                            String item_updated_on, String item_bar_code)
     {
         this.id = id;
-        this.shoppingListId = shoppingListId;
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-        this.checked = checked;
-        this.image = image;
-        this.group = group;
-        this.createdOn = createdOn;
-        this.updatedOn = updatedOn;
-    }
-
-    public long getShoppingListId()
-    {
-        return shoppingListId;
-    }
-
-    public void setShoppingListId(long shoppingListId)
-    {
-        this.shoppingListId = shoppingListId;
-    }
-
-    public long getId()
-    {
-        return id;
+        this.list_guid = shoppingListId;
+        this.item_title = name;
+        this.item_description = item_description;
+        this.item_quantity = item_quantity;
+        this.item_checked = item_checked;
+        this.item_group = item_group;
+        this.item_created_on = item_created_on;
+        this.item_updated_on = item_updated_on;
+        this.item_bar_code = item_bar_code;
     }
 
     public void setId(long id)
@@ -56,83 +41,98 @@ public class ShoppingItem_DTO
         this.id = id;
     }
 
-    public String getName()
+    public void setList_guid(String list_guid)
     {
-        return name;
+        this.list_guid = list_guid;
     }
 
-    public void setName(String name)
+    public void setItem_title(String item_title)
     {
-        this.name = name;
+        this.item_title = item_title;
     }
 
-    public String getDescription()
+    public void setItem_description(String item_description)
     {
-        return description;
+        this.item_description = item_description;
     }
 
-    public void setDescription(String description)
+    public void setItem_quantity(int item_quantity)
     {
-        this.description = description;
+        this.item_quantity = item_quantity;
     }
 
-    public int getQuantity()
+    public void setItem_checked(boolean item_checked)
     {
-        return quantity;
+        this.item_checked = item_checked;
     }
 
-    public void setQuantity(int quantity)
+    public void setItem_group(String item_group)
     {
-        this.quantity = quantity;
+        this.item_group = item_group;
     }
 
-    public int getChecked()
+    public void setItem_created_on(String item_created_on)
     {
-        return checked;
+        this.item_created_on = item_created_on;
     }
 
-    public void setChecked(int checked)
+    public void setItem_updated_on(String item_updated_on)
     {
-        this.checked = checked;
+        this.item_updated_on = item_updated_on;
     }
 
-    public String getImage()
+    public void setItem_bar_code(String item_bar_code)
     {
-        return image;
+        this.item_bar_code = item_bar_code;
     }
 
-    public void setImage(String image)
+    public long getId()
     {
-        this.image = image;
+        return id;
     }
 
-    public String getGroup()
+    public String getList_guid()
     {
-        return group;
+        return list_guid;
     }
 
-    public void setGroup(String group)
+    public String getItem_title()
     {
-        this.group = group;
+        return item_title;
     }
 
-    public String getCreatedOn()
+    public String getItem_description()
     {
-        return createdOn;
+        return item_description;
     }
 
-    public void setCreatedOn(String createdOn)
+    public int getItem_quantity()
     {
-        this.createdOn = createdOn;
+        return item_quantity;
     }
 
-    public String getUpdatedOn()
+    public boolean isItem_checked()
     {
-        return updatedOn;
+        return item_checked;
     }
 
-    public void setUpdatedOn(String updatedOn)
+    public String getItem_group()
     {
-        this.updatedOn = updatedOn;
+        return item_group;
+    }
+
+    public String getItem_created_on()
+    {
+        return item_created_on;
+    }
+
+    public String getItem_updated_on()
+    {
+        return item_updated_on;
+    }
+
+    public String getItem_bar_code()
+    {
+        return item_bar_code;
     }
 }

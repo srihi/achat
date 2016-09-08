@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row" style="padding-top: 40px; padding-bottom: 40px;">
+    <table id="email" class="table-condensed table-bordered">
+        <thead>
+            <th width="20%">Email </th>
+            <th width="20%">Guid</th>
+        </thead>
+        <tbody>
+        {% for user in user_list %}
+        <tr>
+            <td>{{ user.user_email }}</td>
+            <td>{{ user.user_guid }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

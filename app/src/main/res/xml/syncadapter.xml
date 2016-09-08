@@ -4,5 +4,4 @@
               android:contentAuthority="@string/content_authority"
               android:isAlwaysSyncable="true"
               android:supportsUploading="true"
-              android:userVisible="true"
-    />
+              android:userVisible="true"/>

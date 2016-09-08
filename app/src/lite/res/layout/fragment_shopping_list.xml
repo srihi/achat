@@ -1,0 +1,73 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:ads="http://schemas.android.com/apk/res-auto"
+             xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".views.ShoppingListFragment">
+
+    <FrameLayout
+        android:id="@+id/shopping_list_rv_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical">
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_ad_unit_id">
+            </com.google.android.gms.ads.AdView>
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/shopping_list_swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/shopping_list_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_new_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:adjustViewBounds="true"
+            android:src="@drawable/icon_add"
+            android:stateListAnimator="@anim/fab_button_animation_default"
+            android:tint="@color/icons"
+            android.support.design:fabSize="normal"
+            app:backgroundTint="@color/accent"
+            app:borderWidth="2dp"
+            app:elevation="2dp"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/empty_list_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/add_first_list_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/add_first_list_button_bg"
+            android:backgroundTint="@null"
+            android:src="@drawable/icon_add"
+        />
+    </FrameLayout>
+</FrameLayout>

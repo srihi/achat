@@ -1,5 +1,6 @@
 package com.dankira.achat.views;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.dankira.achat.IDialogSubmitListener;
 import com.dankira.achat.R;
 import com.dankira.achat.models.ShoppingList;
 
@@ -20,6 +22,7 @@ public class EditListDialog extends DialogFragment
     EditText editListDesc;
     Button btnSubmit;
     private ShoppingList currentShoppingList;
+    private IDialogSubmitListener dialogSubmitListener;
 
     public static EditListDialog newInstance(ShoppingList shoppingList)
     {
@@ -30,6 +33,13 @@ public class EditListDialog extends DialogFragment
 
         instance.setArguments(args);
         return instance;
+    }
+
+    @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+        dialogSubmitListener = (IDialogSubmitListener) context;
     }
 
     @Override
@@ -46,19 +56,29 @@ public class EditListDialog extends DialogFragment
         View rootView = inflater.inflate(R.layout.fragment_add_new_list_dialog, container);
         editListTitle = (EditText) rootView.findViewById(R.id.edit_list_title);
         editListDesc = (EditText) rootView.findViewById(R.id.edit_list_description);
-        btnSubmit = (Button) rootView.findViewById(R.id.btn_submit_new_list);
+        //btnSubmit = (Button) rootView.findViewById(R.id.btn_submit_new_list);
 
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         getDialog().setTitle(getResources().getString(R.string.add_new_list_dialog_title));
 
-        btnSubmit.setOnClickListener(new View.OnClickListener()
+        /*btnSubmit.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
+                currentShoppingList.setListTitle(editListTitle.getText().toString().trim());
+                currentShoppingList.setListDesc(editListDesc.getText().toString().trim());
+
+                if(dialogSubmitListener != null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(ShoppingListFragment.EDITED_LIST_BUNDLE_KEY,currentShoppingList);
+                    dialogSubmitListener.OnDialogSubmit(bundle);
+                }
+
                 EditListDialog.this.dismiss();
             }
-        });
+        });*/
 
         editListTitle.setText(currentShoppingList.getListTitle());
         editListDesc.setText(currentShoppingList.getListDesc());

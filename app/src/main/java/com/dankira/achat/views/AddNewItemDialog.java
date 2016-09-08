@@ -1,5 +1,6 @@
 package com.dankira.achat.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,19 +14,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.dankira.achat.IDialogSubmitListener;
 import com.dankira.achat.R;
+import com.dankira.achat.models.ShoppingItem;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class AddNewItemDialog extends DialogFragment
 {
     private static final String BAR_CODE_ARG_KEY = "BAR_CODE_ARG_KEY";
-    private String barCodeArg;
     EditText editItemTitle;
     EditText editItemDesc;
     TextView txtItemBarcode;
     Button btnScanBarcode;
     Button btnSubmitNewItem;
+    private String barCodeArg;
+    private IDialogSubmitListener dialogSubmitListener;
 
     public static AddNewItemDialog newInstance(String barcode)
     {
@@ -36,6 +40,13 @@ public class AddNewItemDialog extends DialogFragment
 
         instance.setArguments(args);
         return instance;
+    }
+
+    @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+        dialogSubmitListener = (IDialogSubmitListener) context;
     }
 
     @Override
@@ -59,7 +70,12 @@ public class AddNewItemDialog extends DialogFragment
         getDialog().setTitle(getResources().getString(R.string.add_new_item_dialog_title));
 
         btnScanBarcode = (Button) rootView.findViewById(R.id.btn_scan_item_barcode);
-        btnSubmitNewItem = (Button) rootView.findViewById(R.id.btn_submit_new_item);
+
+
+        if (!TextUtils.isEmpty(barCodeArg))
+        {
+            txtItemBarcode.setText(barCodeArg);
+        }
 
         btnScanBarcode.setOnClickListener(new View.OnClickListener()
         {
@@ -75,13 +91,21 @@ public class AddNewItemDialog extends DialogFragment
             @Override
             public void onClick(View view)
             {
+                ShoppingItem item = new ShoppingItem();
+                item.setItemTitle(editItemTitle.getText().toString().trim());
+                item.setItemDescription(editItemDesc.getText().toString().trim());
+                item.setBarCode(txtItemBarcode.getText().toString().trim());
+
+                if (dialogSubmitListener != null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(ShoppingItemsFragment.NEW_ITEM_BUNDLE_KEY, item);
+                    dialogSubmitListener.OnDialogSubmit(bundle);
+                }
+
+                AddNewItemDialog.this.dismiss();
             }
         });
-
-        if (!TextUtils.isEmpty(barCodeArg))
-        {
-            txtItemBarcode.setText(barCodeArg);
-        }
 
         return rootView;
     }

@@ -1,34 +1,26 @@
 package com.dankira.achat.api;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by da on 6/29/2016.
  */
 public class UserProfile
 {
-    private String authToken;
-    private String userName;
+    @Expose
+    public String userName;
+    @Expose
+    public String password;
+    @Expose
+    public String firstName;
+    @Expose
+    public String lastName;
 
-    public UserProfile()
+    public UserProfile(String email, String password, String firstName, String lastName)
     {
-    }
-
-    public String getAuthToken()
-    {
-        return authToken;
-    }
-
-    public String getUserName()
-    {
-        return userName;
-    }
-
-    public void setAuthToken(String authToken)
-    {
-        this.authToken = authToken;
-    }
-
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
+        this.userName = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="@dimen/widget_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_title_height"
+        android:layout_gravity="center"
+        android:background="@drawable/widget_title_bordered_bg"
+        android:elevation="@dimen/widget_title_elevation"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="@string/widget_title_text"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <FrameLayout
+        android:id="@+id/widget_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ListView
+            android:id="@+id/shopping_list_widget_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/widget_list_padding"
+            android:divider="@color/grey"
+            android:dividerHeight="@dimen/widget_list_separator_height"/>
+
+        <TextView
+            android:id="@+id/shopping_list_empty_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="@string/empty_shopping_list_text"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/primary_text"/>
+    </FrameLayout>
+</LinearLayout>
+
+

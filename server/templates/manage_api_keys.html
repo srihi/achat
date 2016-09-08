@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row" style="padding-top: 40px; padding-bottom: 40px;">
+    <table id="email" class="table-condensed table-bordered">
+        <thead>
+            <th width="20%">IP </th>
+            <th width="20%">API Key</th>
+            <th width="20%">Comment </th>
+            <th width="20%">Created On</th>
+        </thead>
+        <tbody>
+        {% for key in api_key_list %}
+        <tr>
+            <td>{{ key.ip }}</td>
+            <td>{{ key.api_key }}</td>
+             <td>{{ key.item_description }}</td>
+             <td>{{ key.date_created }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

@@ -5,9 +5,6 @@ import android.view.View;
 
 import com.dankira.achat.R;
 
-/**
- * Created by da on 7/13/2016.
- */
 public class ItemClickSupport
 {
     private final RecyclerView mRecyclerView;

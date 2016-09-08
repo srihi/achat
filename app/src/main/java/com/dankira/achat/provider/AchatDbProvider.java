@@ -10,24 +10,25 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class AchatDbProvider extends ContentProvider
 {
+    private static final String LOG_TAG = AchatDbProvider.class.getSimpleName();
+
     private static final int SHOPPING_LIST = 0;
     private static final int SHOPPING_LIST_ID = 1;
     private static final int SHOPPING_ITEM = 2;
     private static final int SHOPPING_ITEM_ID = 3;
 
     private static final String shoppingListByIdSelection = AchatDbContracts.ShoppingListTable.TABLE_NAME + "." +
-            AchatDbContracts.ShoppingListTable._ID + "= ?";
+            AchatDbContracts.ShoppingListTable.LIST_GUID + "= ?";
 
     private static final String shoppingItemByIdSelection = AchatDbContracts.ShoppingItemTable.TABLE_NAME + "." +
             AchatDbContracts.ShoppingItemTable._ID + "= ?";
-
-    private AchatDbHelper dbHelper;
-
     private static final SQLiteQueryBuilder shoppingListQueryBuilder;
     private static final SQLiteQueryBuilder shoppingItemQueryBuilder;
+    private static final UriMatcher uriMatcher;
 
     static
     {
@@ -35,25 +36,20 @@ public class AchatDbProvider extends ContentProvider
         shoppingListQueryBuilder = new SQLiteQueryBuilder();
 
         shoppingListQueryBuilder.setTables(AchatDbContracts.ShoppingListTable.TABLE_NAME);
-        shoppingItemQueryBuilder.setTables(AchatDbContracts.ShoppingItemTable.TABLE_NAME +
-                " INNER JOIN " + AchatDbContracts.ShoppingListTable.TABLE_NAME +
-                " ON " + AchatDbContracts.ShoppingItemTable.TABLE_NAME +
-                "." + AchatDbContracts.ShoppingItemTable._ID +
-                "=" + AchatDbContracts.ShoppingListTable.TABLE_NAME +
-                "." + AchatDbContracts.ShoppingListTable._ID);
+        shoppingItemQueryBuilder.setTables(AchatDbContracts.ShoppingItemTable.TABLE_NAME);
     }
-
-    private static final UriMatcher uriMatcher;
 
     static
     {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         uriMatcher.addURI(AchatDbContracts.CONTENT_AUTHORITY, AchatDbContracts.PATH_SHOPPING_LIST, SHOPPING_LIST);
-        uriMatcher.addURI(AchatDbContracts.CONTENT_AUTHORITY, AchatDbContracts.PATH_SHOPPING_LIST + "/#", SHOPPING_LIST_ID);
+        uriMatcher.addURI(AchatDbContracts.CONTENT_AUTHORITY, AchatDbContracts.PATH_SHOPPING_LIST + "/*", SHOPPING_LIST_ID);
         uriMatcher.addURI(AchatDbContracts.CONTENT_AUTHORITY, AchatDbContracts.PATH_SHOPPING_ITEM, SHOPPING_ITEM);
-        uriMatcher.addURI(AchatDbContracts.CONTENT_AUTHORITY, AchatDbContracts.PATH_SHOPPING_ITEM + "/#", SHOPPING_ITEM_ID);
+        uriMatcher.addURI(AchatDbContracts.CONTENT_AUTHORITY, AchatDbContracts.PATH_SHOPPING_ITEM + "/*", SHOPPING_ITEM_ID);
     }
+
+    private AchatDbHelper dbHelper;
 
     @Override
     public boolean onCreate()
@@ -78,7 +74,7 @@ public class AchatDbProvider extends ContentProvider
                 returnCursor = getShoppingListById(uri, projection, sortOrder);
                 break;
             case SHOPPING_ITEM:
-                returnCursor = getShoppingItems(uri, projection,selection, selectionArgs, sortOrder);
+                returnCursor = getShoppingItems(uri, projection, selection, selectionArgs, sortOrder);
                 break;
             case SHOPPING_ITEM_ID:
                 returnCursor = getShoppingItemById(uri, projection, sortOrder);
@@ -97,15 +93,29 @@ public class AchatDbProvider extends ContentProvider
         return returnCursor;
     }
 
-    private Cursor getShoppingLists(Uri uri, String[] projection,String selection, String[] selectionArgs, String sortOrder)
+    private Cursor getShoppingLists(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
     {
-        return shoppingListQueryBuilder.query(dbHelper.getReadableDatabase(),
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                sortOrder);
+        String t = AchatDbContracts.ShoppingListTable.TABLE_NAME + ".";
+
+        String SELECT_LIST = "SELECT " +
+                t + AchatDbContracts.ShoppingListTable._ID + " AS " + AchatDbContracts.ShoppingListTable._ID + "," +
+                t + AchatDbContracts.ShoppingListTable.LIST_TITLE + " AS " + AchatDbContracts.ShoppingListTable.LIST_TITLE + "," +
+                t + AchatDbContracts.ShoppingListTable.LIST_DESCRIPTION + " AS " + AchatDbContracts.ShoppingListTable.LIST_DESCRIPTION + "," +
+                t + AchatDbContracts.ShoppingListTable.LIST_GUID + " AS " + AchatDbContracts.ShoppingListTable.LIST_GUID + "," +
+                t + AchatDbContracts.ShoppingListTable.LIST_CREATED_ON + " AS " + AchatDbContracts.ShoppingListTable.LIST_CREATED_ON + "," +
+                t + AchatDbContracts.ShoppingListTable.LIST_SHARE_STATUS + " AS " + AchatDbContracts.ShoppingListTable.LIST_SHARE_STATUS + "," +
+                "COUNT(" + AchatDbContracts.ShoppingItemTable.TABLE_NAME + "." +
+                AchatDbContracts.ShoppingItemTable._ID + ") AS item_count" +
+                " FROM " +
+                AchatDbContracts.ShoppingListTable.TABLE_NAME + " LEFT JOIN " +
+                AchatDbContracts.ShoppingItemTable.TABLE_NAME + " ON (" +
+                t + AchatDbContracts.ShoppingListTable.LIST_GUID + "=" +
+                AchatDbContracts.ShoppingItemTable.TABLE_NAME + "." +
+                AchatDbContracts.ShoppingItemTable.LIST_GUID + ")" +
+                " GROUP BY " +
+                t + AchatDbContracts.ShoppingListTable.LIST_GUID;
+
+        return dbHelper.getReadableDatabase().rawQuery(SELECT_LIST, selectionArgs);
     }
 
     private Cursor getShoppingListById(Uri uri, String[] projection, String sortOrder)
@@ -174,41 +184,46 @@ public class AchatDbProvider extends ContentProvider
         final int matchedUri = uriMatcher.match(uri);
 
         Uri returnUri;
-
+        long idInserted = -1;
         switch (matchedUri)
         {
             case SHOPPING_LIST:
             {
-                long idInserted = db.insert(AchatDbContracts.ShoppingListTable.TABLE_NAME, null, contentValues);
+                idInserted = db.insert(AchatDbContracts.ShoppingListTable.TABLE_NAME, null, contentValues);
                 if (idInserted > 0)
                 {
                     returnUri = AchatDbContracts.ShoppingListTable.buildShoppingListUri(idInserted);
                 }
                 else
                 {
+                    Log.e(LOG_TAG, "Failed to insert row into " + AchatDbContracts.ShoppingListTable.TABLE_NAME);
                     throw new android.database.SQLException("Failed to insert row into " + AchatDbContracts.ShoppingListTable.TABLE_NAME);
                 }
                 break;
             }
             case SHOPPING_ITEM:
             {
-                long idInserted = db.insert(AchatDbContracts.ShoppingItemTable.TABLE_NAME, null, contentValues);
+                idInserted = db.insert(AchatDbContracts.ShoppingItemTable.TABLE_NAME, null, contentValues);
                 if (idInserted > 0)
                 {
                     returnUri = AchatDbContracts.ShoppingItemTable.buildShoppingItemUri(idInserted);
                 }
                 else
                 {
+                    Log.e(LOG_TAG, "Failed to insert row into " + AchatDbContracts.ShoppingItemTable.TABLE_NAME);
                     throw new android.database.SQLException("Failed to insert row into " + AchatDbContracts.ShoppingItemTable.TABLE_NAME);
                 }
                 break;
             }
             default:
             {
+                Log.e(LOG_TAG,"Unsupported operation due to unknown uri: " + uri);
                 throw new UnsupportedOperationException("Unsupported operation due to unknown uri: " + uri);
             }
         }
-        getContext().getContentResolver().notifyChange(uri, null);
+
+        if (idInserted > 0)
+            getContext().getContentResolver().notifyChange(uri, null);
         return returnUri;
     }
 
@@ -234,6 +249,7 @@ public class AchatDbProvider extends ContentProvider
             }
             default:
             {
+                Log.e(LOG_TAG,"Unsupported operation due to unknown uri: " + uri);
                 throw new UnsupportedOperationException("Unsupported operation due to unknown uri: " + uri);
             }
         }
@@ -266,6 +282,7 @@ public class AchatDbProvider extends ContentProvider
             }
             default:
             {
+                Log.e(LOG_TAG,"Unsupported operation due to unknown uri: " + uri);
                 throw new UnsupportedOperationException("Unsupported operation due to unknown uri: " + uri);
             }
         }
@@ -294,7 +311,15 @@ public class AchatDbProvider extends ContentProvider
                 {
                     for (ContentValues v : values)
                     {
-                        long _id = db.insert(AchatDbContracts.ShoppingListTable.TABLE_NAME, null, v);
+                        long _id = -1;
+                        try
+                        {
+                            _id = db.insertOrThrow(AchatDbContracts.ShoppingListTable.TABLE_NAME, null, v);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.d(LOG_TAG,"An exception occurred while inserting into"+ AchatDbContracts.ShoppingListTable.TABLE_NAME+" table. Exception :"+ e.getMessage());
+                        }
 
                         if (_id != -1)
                             insertCount++;
@@ -306,7 +331,8 @@ public class AchatDbProvider extends ContentProvider
                     db.endTransaction();
                 }
 
-                getContext().getContentResolver().notifyChange(uri, null);
+                if (insertCount > 0)
+                    getContext().getContentResolver().notifyChange(uri, null);
 
                 return insertCount;
             }
@@ -319,8 +345,15 @@ public class AchatDbProvider extends ContentProvider
                 {
                     for (ContentValues v : values)
                     {
-                        long _id = db.insert(AchatDbContracts.ShoppingItemTable.TABLE_NAME, null, v);
-
+                        long _id = -1;
+                        try
+                        {
+                            _id = db.insertOrThrow(AchatDbContracts.ShoppingItemTable.TABLE_NAME, null, v);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.d(LOG_TAG,"An exception occurred while inserting into"+ AchatDbContracts.ShoppingItemTable.TABLE_NAME+" table. Exception :"+ e.getMessage());
+                        }
                         if (_id != -1)
                             insertCount++;
 
@@ -331,8 +364,8 @@ public class AchatDbProvider extends ContentProvider
                 {
                     db.endTransaction();
                 }
-
-                getContext().getContentResolver().notifyChange(uri, null);
+                if (insertCount > 0)
+                    getContext().getContentResolver().notifyChange(uri, null);
 
                 return insertCount;
             }

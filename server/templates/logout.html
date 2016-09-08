@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-page">
+  <div class="form">
+      <h1>Logged out</h1>
+      <p>You have successfully logged out  </p>
+      <p><a href="{{ url_for('admin.login') }}"> <strong> LOG IN </strong> </a></p>
+  </div>
+</div>
+{% endblock content %}

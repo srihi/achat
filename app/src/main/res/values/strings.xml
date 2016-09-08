@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">[achat]</string>
-    <string name="title_activity_login">Sign in</string>
-
-    <!-- Strings related to login -->
+    <string name="title_activity_login">[achat] - Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password </string>
     <string name="action_sign_in">Sign in or register</string>
@@ -18,17 +16,70 @@
     <string name="btn_link_login">Already registered? Log in.</string>
     <string name="lbl_full_name">Full Name</string>
     <string name="login_error_message">Invalid credentials, please try again.</string>
-    <string name="title_activity_shopping_list">ShoppingListActivity</string>
+    <string name="title_activity_shopping_list"> Shopping List</string>
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_type">com.dankira.achat</string>
     <string name="content_authority">com.dankira.achat.contentprovider</string>
     <string name="add_new_list_dialog_title">Add a new shopping list</string>
-    <string name="hint_item_title">Item title...</string>
-    <string name="hint_item_desc">Description...</string>
+    <string name="hint_item_title">Item name</string>
+    <string name="hint_item_desc">Description</string>
     <string name="add_new_item_dialog_title">Add new shopping item</string>
     <string name="login_label">Login</string>
-    <string name="register_label">Register</string>
+    <string name="title_register_activity">Register</string>
+    <string name="register_hint_user_email">Email</string>
+    <string name="register_hint_user_firstName">First Name</string>
+    <string name="register_hint_user_lastName">Last Name</string>
+    <string name="register_hint_user_password">Password</string>
+    <string name="register_hint_repeatPassword">Repeat Password</string>
+    <string name="register_button_label">Register</string>
+    <string name="register_already_registered">Already have an account? Click here to log in.</string>
+    <string name="enter_share_code_btn_label">Accept Share</string>
+    <string name="btn_scan_QR_label">Scan QR Code</string>
+    <string name="lbl_string_or">OR</string>
+    <string name="edit_QR_hint_label">Enter Code or Scan QR</string>
+    <string name="btn_refresh_qr_label">Generate New Share Code</string>
+    <string name="btn_cancel_label">Cancel</string>
+    <string name="btn_create_item_label">Create Item</string>
+    <string name="btn_add_list_label">Create List</string>
+    <string name="new_list_title_hint">List title</string>
+    <string name="new_list_desc_hint">Description</string>
+    <string name="title_share_activity">Share List</string>
+    <string name="title_accept_share">Add Shared List</string>
+    <string name="title_shopping_items_activity">Shopping Items</string>
+    <string name="invalid_email_error_text">Invalid Email</string>
+    <string name="invalid_password_error_text">Invalid Password</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="action_add_list">Add</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_refresh_list">Refresh</string>
+    <string name="action_share_list">Share</string>
+    <string name="bar_code_scanner_prompt">Scan share QR code.</string>
+    <string name="error_msg_no_list_selected">No list selected to share. Returning to shopping lists…</string>
+    <string name="error_msg_server_returned_error">Unable to create share card. Server returned Error.</string>
+    <string name="error_msg_server_returned_empty_share_code">Server returned empty share code. Retry again.</string>
+    <string name="error_msg_authentication_error">Unable to authenticate the current user.</string>
+    <string name="no_items_in_list">It looks like this list is empty.</string>
+    <string name="no_items_in_list_desc">try adding a few items by clicking on the big add button below.</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="menu_settings_title">Settings</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_manage_shared_lists">Manage Shared Lists</string>
+    <string name="title_home">Home</string>
+    <string name="logout">Logout</string>
+    <string name="menu_logout">Logout</string>
+    <string name="title_share_list_activity">Share list</string>
+    <string name="logout_alert_dialog_title">Confirm logout</string>
+    <string name="logout_alert_dialog_message">This will log you out of your account on this device, but your data is still safe with us on the server.</string>
+    <string name="logout_button_label">Log out</string>
+    <plurals name="items_count_formatted">
+        <item quantity="zero">(empty)</item>
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <string name="list_items_count_formatted">(%1$dx)</string>
+    <string name="achat_widget_label">Achat Widget</string>
+    <string name="empty_shopping_list_text">No Shopping Lists Available.</string>
+    <string name="widget_title_text">Your Shopping Lists</string>
 </resources>

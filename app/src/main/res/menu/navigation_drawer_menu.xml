@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_drawer_home"
+            android:icon="@drawable/icon_home"
+            android:title="@string/title_home"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_drawer_add_shared_list"
+            android:icon="@drawable/icon_qrcode_scan"
+            android:title="@string/title_accept_share"/>
+        <item
+            android:id="@+id/nav_drawer_manage_shared_list"
+            android:icon="@drawable/icon_share"
+            android:title="@string/menu_manage_shared_lists"/>
+        <item
+            android:id="@+id/nav_drawer_help"
+            android:icon="@drawable/icon_help_circle_outline"
+            android:title="@string/menu_help"/>
+        <item
+            android:id="@+id/nav_drawer_settings"
+            android:icon="@drawable/icon_settings"
+            android:title="@string/menu_settings_title"/>
+        <item android:title="">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_logout"
+                        android:icon="@drawable/icon_logout"
+                        android:title="@string/menu_logout"/>
+                </group>
+            </menu>
+        </item>
+    </group>
+
+</menu>

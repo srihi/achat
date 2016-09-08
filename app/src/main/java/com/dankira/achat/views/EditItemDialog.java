@@ -1,6 +1,7 @@
 package com.dankira.achat.views;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.dankira.achat.IDialogSubmitListener;
 import com.dankira.achat.R;
 import com.dankira.achat.models.ShoppingItem;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -30,6 +32,7 @@ public class EditItemDialog extends DialogFragment
     Button btnScanBarcode;
     TextView txtItemBarcode;
     private ShoppingItem currentItem;
+    private IDialogSubmitListener dialogSubmitListener;
 
     public static EditItemDialog newInstance(ShoppingItem shoppingItem)
     {
@@ -41,6 +44,13 @@ public class EditItemDialog extends DialogFragment
         instance.setArguments(args);
 
         return instance;
+    }
+
+    @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+        dialogSubmitListener = (IDialogSubmitListener) context;
     }
 
     @Override
@@ -64,7 +74,11 @@ public class EditItemDialog extends DialogFragment
         getDialog().setTitle(getResources().getString(R.string.add_new_item_dialog_title));
 
         btnScanBarcode = (Button) rootDialogView.findViewById(R.id.btn_scan_item_barcode);
-        btnSubmit = (Button) rootDialogView.findViewById(R.id.btn_submit_new_item);
+
+
+        editItemTitle.setText(currentItem.getItemTitle());
+        editItemDesc.setText(currentItem.getItemDescription());
+        txtItemBarcode.setText(currentItem.getBarCode());
 
         btnScanBarcode.setOnClickListener(new View.OnClickListener()
         {
@@ -80,13 +94,20 @@ public class EditItemDialog extends DialogFragment
             @Override
             public void onClick(View view)
             {
+                currentItem.setBarCode(txtItemBarcode.getText().toString().trim());
+                currentItem.setItemTitle(editItemTitle.getText().toString().trim());
+                currentItem.setItemTitle(editItemDesc.getText().toString().trim());
 
+                if (dialogSubmitListener != null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(ShoppingItemsFragment.EDIT_ITEM_BUNDLE_KEY, currentItem);
+                    dialogSubmitListener.OnDialogSubmit(bundle);
+                }
+
+                EditItemDialog.this.dismiss();
             }
         });
-
-        editItemTitle.setText(currentItem.getItemTitle());
-        editItemDesc.setText(currentItem.getItemDescription());
-        txtItemBarcode.setText(currentItem.getBarCode());
 
         return rootDialogView;
     }

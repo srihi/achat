@@ -1,27 +1,20 @@
 package com.dankira.achat.api;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by da on 6/30/2016.
  */
 public class UserCredentials
 {
-    private String _userEmail;
-    private String _password;
+    @Expose
+    public String userEmail;
+    @Expose
+    public String password;
 
     public UserCredentials(String userEmail, String password)
     {
-        this._userEmail = userEmail;
-        this._password = password;
+        this.userEmail = userEmail;
+        this.password = password;
     }
-
-    public String get_userEmail()
-    {
-        return _userEmail;
-    }
-
-    public String get_password()
-    {
-        return _password;
-    }
-
 }

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "362666519157",
+    "firebase_url": "https://fir-achat.firebaseio.com",
+    "project_id": "firebase-achat",
+    "storage_bucket": "firebase-achat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362666519157:android:cafb3210d6196aa0",
+        "android_client_info": {
+          "package_name": "com.dankira.achat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362666519157-ou5h3tcco4c757nr2oo8hr6b1sbp6ess.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "362666519157-lnm0e6ihoflej8pmbt57iq57gdbkvo49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbBDvlgvtsF0cnMG4tc43v9J8MkKWnfPI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,27 +14,20 @@ import java.util.Random;
 public class ShareCodeHelper
 {
 
-    public static final int QR_HEIGHT = 150;
-    public static final int QR_WIDTH = 150;
-    public static final int SHARE_CODE_LENGTH = 8;
+    public static final int QR_HEIGHT = 400;
+    public static final int QR_WIDTH = 400;
 
-    public static String generateShareCode()
-    {
-        String randString = generateRandomString(SHARE_CODE_LENGTH);
-        // TODO: 7/20/2016 Check if this code is already being used.
-
-        return randString;
-
-    }
-
-    public static Bitmap generateShareCodeQR(String shareCode)
+    public static Bitmap generateShareCodeQR(String shareCode, int dipFactor)
     {
         BarcodeEncoder encoder = new BarcodeEncoder();
         Bitmap bitmap = null;
 
         try
         {
-            bitmap = encoder.encodeBitmap(shareCode, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT);
+            int width = QR_WIDTH * (dipFactor / 160);
+            int height = QR_HEIGHT * (dipFactor / 160);
+
+            bitmap = encoder.encodeBitmap(shareCode, BarcodeFormat.QR_CODE, width, height);
         }
         catch (WriterException e)
         {

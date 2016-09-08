@@ -15,14 +15,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ServiceGenerator
 {
-    public static final String API_BASE_URL = "http://192.168.42.131/";
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    public static final String API_BASE_URL = "http://ec2-52-43-200-178.us-west-2.compute.amazonaws.com/api/";
     private static Retrofit.Builder builder = new Retrofit.Builder().baseUrl(API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create());
 
     public static <T> T createService(Class<T> serviceClass)
     {
-        return createService(serviceClass, null);
+        return createService(serviceClass, "");
     }
 
     public static <T> T createService(Class<T> serviceClass, final String apiKey)
@@ -37,7 +36,7 @@ public class ServiceGenerator
                 HttpUrl originalHttpUrl = original.url();
 
                 HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("apikey", apiKey)
+                        .addQueryParameter("api_key", apiKey)
                         .build();
                 Request.Builder requestBuilder = original.newBuilder()
                         .url(url);

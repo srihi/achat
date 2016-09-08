@@ -2,6 +2,8 @@ package com.dankira.achat.models;
 
 import android.database.Cursor;
 
+import com.dankira.achat.provider.AchatDbContracts;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -17,14 +19,16 @@ public class ShoppingItem implements Serializable
     private String itemDescription;
     private Date itemAddedOn;
     private int itemQuantity;
-    private int shoppingListId;
+    private String listGuid;
+    private boolean isItemChecked;
 
     public ShoppingItem()
     {
+        itemQuantity = 1;
     }
 
     public ShoppingItem(int id, String barCode, String itemTitle, String itemDescription,
-                        Date itemAddedOn, int itemQuantity, int shoppingListId)
+                        Date itemAddedOn, int itemQuantity, String listGuid, boolean isItemChecked)
     {
         this.id = id;
         this.barCode = barCode;
@@ -32,17 +36,20 @@ public class ShoppingItem implements Serializable
         this.itemDescription = itemDescription;
         this.itemAddedOn = itemAddedOn;
         this.itemQuantity = itemQuantity;
-        this.shoppingListId = shoppingListId;
+        this.listGuid = listGuid;
+        this.isItemChecked = isItemChecked;
     }
 
     public static ShoppingItem fromCursor(Cursor cursor)
     {
 
         ShoppingItem shoppingItem = new ShoppingItem();
-        // TODO: 7/11/2016 get the shopping item from the cursor here.
-        // The cursor is already pointing to the right location of the element when this is called.
-        // you only need to cast the column elements and create the right object to return.
-        //T element = cursor.getT(cursor.getColumnIndex(ShoppingListDb.SOME_COLUMN_NAME))
+        shoppingItem.setItemTitle(cursor.getString(cursor.getColumnIndex(AchatDbContracts.ShoppingItemTable.ITEM_NAME)));
+        shoppingItem.setItemDescription(cursor.getString(cursor.getColumnIndex(AchatDbContracts.ShoppingItemTable.ITEM_DESCRIPTION)));
+        shoppingItem.setItemQuantity(cursor.getInt(cursor.getColumnIndex(AchatDbContracts.ShoppingItemTable.ITEM_QUANTITY)));
+        shoppingItem.setListGuid(cursor.getString(cursor.getColumnIndex(AchatDbContracts.ShoppingItemTable.LIST_GUID)));
+        shoppingItem.setItemChecked(cursor.getInt(cursor.getColumnIndex(AchatDbContracts.ShoppingItemTable.ITEM_CHECKED)) > 0);
+
         return shoppingItem;
     }
 
@@ -101,14 +108,24 @@ public class ShoppingItem implements Serializable
         this.itemQuantity = itemQuantity;
     }
 
-    public int getShoppingListId()
+    public String getListGuid()
     {
-        return shoppingListId;
+        return listGuid;
     }
 
-    public void setShoppingListId(int shoppingListId)
+    public void setListGuid(String listGuid)
     {
-        this.shoppingListId = shoppingListId;
+        this.listGuid = listGuid;
+    }
+
+    public boolean isItemChecked()
+    {
+        return isItemChecked;
+    }
+
+    public void setItemChecked(boolean itemChecked)
+    {
+        isItemChecked = itemChecked;
     }
 
     @Override
@@ -122,7 +139,7 @@ public class ShoppingItem implements Serializable
         if (!Objects.equals(si.getItemTitle(), getItemTitle())) return false;
         if (!Objects.equals(si.getItemDescription(), getItemDescription())) return false;
         if (!Objects.equals(si.getBarCode(), getBarCode())) return false;
-        if (!Objects.equals(si.getShoppingListId(), getShoppingListId())) return false;
+        if (!Objects.equals(si.getListGuid(), getListGuid())) return false;
 
         return true;
     }
