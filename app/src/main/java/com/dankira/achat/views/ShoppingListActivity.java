@@ -7,6 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -49,11 +52,11 @@ public class ShoppingListActivity extends SecuredAppCompatActivityBase
         navDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View navHeaderView = navigationView.getHeaderView(0);
-        if(navHeaderView != null)
+        if (navHeaderView != null)
         {
-            TextView userName = (TextView)  navHeaderView.findViewById(R.id.nav_drawer_user_email);
-            Account[] accountsList =  AccountManager.get(this).getAccounts();
-            if(accountsList.length > 0)
+            TextView userName = (TextView) navHeaderView.findViewById(R.id.nav_drawer_user_email);
+            Account[] accountsList = AccountManager.get(this).getAccounts();
+            if (accountsList.length > 0)
             {
                 String name = accountsList[0].name;
                 userName.setText(name);
@@ -135,8 +138,8 @@ public class ShoppingListActivity extends SecuredAppCompatActivityBase
                         // open the settings page
                         break;
                     case R.id.nav_logout:
-                        final Account[] accountsList =  AccountManager.get(ShoppingListActivity.this).getAccountsByType(AccountGeneral.ACCOUNT_TYPE);
-                        if(accountsList.length > 0)
+                        final Account[] accountsList = AccountManager.get(ShoppingListActivity.this).getAccountsByType(AccountGeneral.ACCOUNT_TYPE);
+                        if (accountsList.length > 0)
                         {
                             new MaterialDialog.Builder(ShoppingListActivity.this)
                                     .title(R.string.logout_alert_dialog_title)
@@ -158,7 +161,7 @@ public class ShoppingListActivity extends SecuredAppCompatActivityBase
                                             }
                                             else
                                             {
-                                                AccountManager.get(ShoppingListActivity.this).removeAccount(accountsList[0],null,null);
+                                                AccountManager.get(ShoppingListActivity.this).removeAccount(accountsList[0], null, null);
                                             }
                                         }
                                     })
@@ -178,7 +181,7 @@ public class ShoppingListActivity extends SecuredAppCompatActivityBase
     }
 
     @Override
-    public void OnShoppingListSelected(String list_guid)
+    public void OnShoppingListSelected(String list_guid, View view)
     {
         if (isTwoPaneLayout)
         {
@@ -192,7 +195,10 @@ public class ShoppingListActivity extends SecuredAppCompatActivityBase
         {
             Intent listItemIntent = new Intent(this, ShoppingItemActivity.class);
             listItemIntent.putExtra(ShoppingItemsFragment.SELECTED_LIST_ID, list_guid);
-            startActivity(listItemIntent);
+
+            ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    new Pair<View, String>(view, getString(R.string.shopping_items_transition_name)));
+            ActivityCompat.startActivity(this, listItemIntent, activityOptions.toBundle());
         }
     }
 

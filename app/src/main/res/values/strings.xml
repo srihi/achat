@@ -82,4 +82,5 @@
     <string name="achat_widget_label">Achat Widget</string>
     <string name="empty_shopping_list_text">No Shopping Lists Available.</string>
     <string name="widget_title_text">Your Shopping Lists</string>
+    <string name="shopping_items_transition_name">TRANSITION_LIST_ITEMS</string>
 </resources>

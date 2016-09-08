@@ -131,7 +131,7 @@ public class ShoppingListFragment extends Fragment
                 {
                     sl = ShoppingList.fromCursor(current_cursor);
                 }
-                selectedListener.OnShoppingListSelected(sl.getListGuid());
+                selectedListener.OnShoppingListSelected(sl.getListGuid(), v);
             }
         });
 
@@ -163,6 +163,10 @@ public class ShoppingListFragment extends Fragment
         AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+        if(savedInstanceState == null){
+            onRefresh();
+        }
 
         return rootView;
     }
