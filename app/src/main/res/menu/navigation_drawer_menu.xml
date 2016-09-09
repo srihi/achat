@@ -4,9 +4,9 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_drawer_home"
+            android:checked="true"
             android:icon="@drawable/icon_home"
-            android:title="@string/title_home"
-            android:checked="true"/>
+            android:title="@string/title_home"/>
         <item
             android:id="@+id/nav_drawer_add_shared_list"
             android:icon="@drawable/icon_qrcode_scan"

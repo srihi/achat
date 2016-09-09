@@ -8,28 +8,28 @@
 
     <CheckBox
         android:id="@+id/ckbox_item_is_checked"
-        android:focusable="false"
-        android:text=""
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="8"
         android:ellipsize="end"
+        android:focusable="false"
         android:gravity="center_vertical|start"
         android:singleLine="true"
-        android:textSize="16sp"
-        android:textColor="@color/primary_text">
+        android:text=""
+        android:textColor="@color/primary_text"
+        android:textSize="16sp">
     </CheckBox>
 
     <TextView
         android:id="@+id/txt_shopping_item_qty"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_gravity="end|center_vertical"
+        android:layout_weight="1"
         android:gravity="center_vertical|end"
-        android:textSize="16sp"
         android:singleLine="true"
         android:textColor="@color/secondary_text"
+        android:textSize="16sp"
         />
 
 </LinearLayout>

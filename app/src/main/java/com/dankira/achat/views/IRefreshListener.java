@@ -5,5 +5,5 @@ package com.dankira.achat.views;
  */
 public interface IRefreshListener
 {
-    public void onRefresh();
+    void onRefresh();
 }

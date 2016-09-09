@@ -29,9 +29,9 @@
             android:id="@+id/shopping_list_widget_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/widget_list_padding"
             android:divider="@color/grey"
-            android:dividerHeight="@dimen/widget_list_separator_height"/>
+            android:dividerHeight="@dimen/widget_list_separator_height"
+            android:padding="@dimen/widget_list_padding"/>
 
         <TextView
             android:id="@+id/shopping_list_empty_text"

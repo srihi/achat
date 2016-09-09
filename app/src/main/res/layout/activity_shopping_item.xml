@@ -12,18 +12,19 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
         <TextView
+            android:id="@+id/shopping_items_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_shopping_items_activity"
             android:layout_gravity="center"
-            android:id="@+id/shopping_items_toolbar_title"
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
+            android:text="@string/title_shopping_items_activity"
+            android:textColor="@color/primary_text"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary_text"/>
+            android:textStyle="bold"/>
     </android.support.v7.widget.Toolbar>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"

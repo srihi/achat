@@ -11,9 +11,12 @@
         android:id="@+id/shopping_list_rv_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
@@ -68,6 +71,6 @@
             android:background="@drawable/add_first_list_button_bg"
             android:backgroundTint="@null"
             android:src="@drawable/icon_add"
-        />
+            />
     </FrameLayout>
 </FrameLayout>

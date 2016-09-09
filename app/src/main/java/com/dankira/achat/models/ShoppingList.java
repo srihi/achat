@@ -121,8 +121,7 @@ public class ShoppingList implements Serializable {
         ShoppingList sl = (ShoppingList) obj;
 
         if (!Objects.equals(sl.getListTitle(), getListTitle())) return false;
-        if (!Objects.equals(sl.getListDesc(), getListDesc())) return false;
+        return Objects.equals(sl.getListDesc(), getListDesc());
 
-        return true;
     }
 }

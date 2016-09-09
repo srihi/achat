@@ -139,8 +139,7 @@ public class ShoppingItem implements Serializable
         if (!Objects.equals(si.getItemTitle(), getItemTitle())) return false;
         if (!Objects.equals(si.getItemDescription(), getItemDescription())) return false;
         if (!Objects.equals(si.getBarCode(), getBarCode())) return false;
-        if (!Objects.equals(si.getListGuid(), getListGuid())) return false;
+        return Objects.equals(si.getListGuid(), getListGuid());
 
-        return true;
     }
 }

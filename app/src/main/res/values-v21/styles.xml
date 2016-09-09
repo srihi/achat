@@ -17,6 +17,7 @@
         <item name="android:checkboxStyle">@style/RobotoCheckBoxStyle</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+
     <style name="RobotoTextViewStyle" parent="android:Widget.Material.TextView">
         <item name="android:fontFamily">sans-serif-light</item>
     </style>

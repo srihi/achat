@@ -5,6 +5,7 @@
     <stroke
         android:width="1dip"
         android:color="@color/icon_color_default"/>
-    <size android:width="40dp"
-          android:height="40dp"/>
+    <size
+        android:width="40dp"
+        android:height="40dp"/>
 </shape>

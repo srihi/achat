@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
              xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
              tools:context=".views.ShoppingListFragment">
 
     <FrameLayout
@@ -31,14 +31,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:adjustViewBounds="true"
             android:src="@drawable/icon_add"
             android:stateListAnimator="@anim/fab_button_animation_default"
-            app:elevation="2dp"
-            app:borderWidth="2dp"
             android:tint="@color/icons"
             android.support.design:fabSize="normal"
-            android:adjustViewBounds="true"
-            app:backgroundTint="@color/accent"/>
+            app:backgroundTint="@color/accent"
+            app:borderWidth="2dp"
+            app:elevation="2dp"/>
     </FrameLayout>
 
     <FrameLayout

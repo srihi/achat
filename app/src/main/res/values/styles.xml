@@ -17,6 +17,7 @@
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
         <item name="android:homeAsUpIndicator">@drawable/icon_back</item>
     </style>
+
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
