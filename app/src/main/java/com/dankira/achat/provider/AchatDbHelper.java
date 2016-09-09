@@ -6,7 +6,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class AchatDbHelper extends SQLiteOpenHelper
 {
-    public AchatDbHelper(Context context)
+    private static AchatDbHelper _instance;
+
+    public static synchronized AchatDbHelper instance(Context context)
+    {
+        if(_instance == null)
+        {
+            _instance = new AchatDbHelper(context.getApplicationContext());
+        }
+
+        return _instance;
+    }
+
+    private AchatDbHelper(Context context)
     {
         super(context, AchatDbContracts.DATABASE_NAME, null, AchatDbContracts.DATABBASE_VERSION);
     }

@@ -54,7 +54,7 @@ public class AchatDbProvider extends ContentProvider
     @Override
     public boolean onCreate()
     {
-        dbHelper = new AchatDbHelper(getContext());
+        dbHelper = AchatDbHelper.instance(getContext());
         return true;
     }
 
