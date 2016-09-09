@@ -36,7 +36,6 @@
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:nextFocusDown="@id/txtPassword"
                 android:paddingBottom="@dimen/txt_field_defaultPadding"
                 android:paddingTop="@dimen/txt_field_defaultPadding"
                 android:singleLine="true"
@@ -72,7 +71,6 @@
                 android:layout_marginTop="@dimen/btn_login_margin"
                 android:contentDescription="@string/cd_sign_in"
                 android:focusable="true"
-                android:nextFocusDown="@id/btn_linktoReg"
                 android:padding="@dimen/form_button_padding"
                 android:text="@string/action_sign_in_short"/>
 

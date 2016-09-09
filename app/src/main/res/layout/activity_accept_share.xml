@@ -69,7 +69,6 @@
                 android:hint="@string/edit_QR_hint_label"
                 android:inputType="number"
                 android:maxLines="1"
-                android:nextFocusDown="@id/btn_submit_share_code"
                 android:padding="@dimen/txt_field_defaultPadding"
                 android:singleLine="true"
                 />
