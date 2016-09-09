@@ -13,6 +13,9 @@ import com.dankira.achat.R;
 import com.dankira.achat.models.ShoppingList;
 import com.dankira.achat.provider.AchatDbContracts;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ShoppingItemActivity extends SecuredAppCompatActivityBase
 {
     private String selectedListId = "";
@@ -24,14 +27,21 @@ public class ShoppingItemActivity extends SecuredAppCompatActivityBase
             AchatDbContracts.ShoppingListTable.LIST_CREATED_ON,
             AchatDbContracts.ShoppingListTable.LIST_SHARE_STATUS
     };
-    private TextView title_bar_text;
+
     private ShoppingList currentShoppingList;
+
+    @BindView(R.id.shopping_items_toolbar_title)
+    private TextView title_bar_text;
+    @BindView(R.id.shopping_item_toolbar)
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_item);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.shopping_item_toolbar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
         {
@@ -40,10 +50,8 @@ public class ShoppingItemActivity extends SecuredAppCompatActivityBase
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            /*getSupportActionBar().setLogo(R.drawable.icon_achat_app);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);*/
         }
-        title_bar_text = (TextView)findViewById(R.id.shopping_items_toolbar_title);
+
         if (savedInstanceState == null)
         {
             selectedListId = getIntent().getStringExtra(ShoppingItemsFragment.SELECTED_LIST_ID);

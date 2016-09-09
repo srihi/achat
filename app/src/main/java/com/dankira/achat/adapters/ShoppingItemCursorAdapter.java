@@ -14,6 +14,9 @@ import com.dankira.achat.models.ShoppingItem;
 
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ShoppingItemCursorAdapter extends CursorRecyclerViewAdapter<ShoppingItemCursorAdapter.ViewHolder>
 {
     private Context currentContext;
@@ -56,17 +59,17 @@ public class ShoppingItemCursorAdapter extends CursorRecyclerViewAdapter<Shoppin
         viewHolder.isItemChecked.setChecked(item.isItemChecked());
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder
     {
+        @BindView(R.id.txt_shopping_item_qty)
         public TextView shoppingItemQty;
+        @BindView(R.id.ckbox_item_is_checked)
         public CheckBox isItemChecked;
 
         public ViewHolder(View itemLayoutView)
         {
             super(itemLayoutView);
-
-            shoppingItemQty = (TextView) itemLayoutView.findViewById(R.id.txt_shopping_item_qty);
-            isItemChecked = (CheckBox) itemLayoutView.findViewById(R.id.ckbox_item_is_checked);
+            ButterKnife.bind(this, itemLayoutView);
         }
     }
 }

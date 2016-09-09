@@ -14,7 +14,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.dankira.achat.R;
 import com.dankira.achat.api.LoginResponse;
@@ -27,11 +26,14 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class AchatAuthenticatorActivity extends AccountAuthenticatorActivity
 {
+    private static final String LOG_TAG = AchatAuthenticatorActivity.class.getSimpleName();
     public static final String ARG_ACCOUNT_TYPE = "ACCOUNT_TYPE";
     public static final String ARG_AUTH_TYPE = "AUTH_TYPE";
     public static final String ARG_IS_ADDING_NEW_ACCOUNT = "IS_ADDING_NEW_ACCOUNT";
@@ -40,26 +42,29 @@ public class AchatAuthenticatorActivity extends AccountAuthenticatorActivity
 
     public static final String KEY_ERROR_MESSAGE = "ERR_MSG";
     private static final int REQ_SIGN_UP = 1;
-
     private AccountManager accountManager;
     private String authTokenType;
-    private Button signInButton;
-    private Button btnLinkToRegistration;
-    private TextView txtUserEmail;
 
+    @BindView(R.id.btnLogin)
+    private Button signInButton;
+    @BindView(R.id.btn_linktoReg)
+    private Button btnLinkToRegistration;
+    @BindView(R.id.txtUserEmail)
+    private EditText txtUserEmail;
+    @BindView(R.id.txtPassword)
+    private EditText txtPasswordField;
+    @BindView(R.id.login_activity_coord_layout)
     private CoordinatorLayout coordinatorLayout;
-    private static final String LOG_TAG = AchatAuthenticatorActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.login_activity_coord_layout);
-        txtUserEmail = (TextView) findViewById(R.id.txtUserEmail);
         accountManager = AccountManager.get(getBaseContext());
-        signInButton = (Button) findViewById(R.id.btnLogin);
+
         signInButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -70,7 +75,6 @@ public class AchatAuthenticatorActivity extends AccountAuthenticatorActivity
             }
         });
 
-        btnLinkToRegistration = (Button) findViewById(R.id.btn_linktoReg);
         btnLinkToRegistration.setOnClickListener(new View.OnClickListener()
         {
 
@@ -122,16 +126,13 @@ public class AchatAuthenticatorActivity extends AccountAuthenticatorActivity
 
     private void submit()
     {
-        EditText txtUserEmailField = (EditText) findViewById(R.id.txtUserEmail);
-        EditText txtPasswordField = (EditText) findViewById(R.id.txtPassword);
-
-        final String userEmail = txtUserEmailField.getText().toString().trim();
+        final String userEmail = txtUserEmail.getText().toString().trim();
         final String userPassword = txtPasswordField.getText().toString().trim();
         final String accountType = getIntent().getStringExtra(ARG_ACCOUNT_TYPE);
 
         if (!isValidEmail(userEmail))
         {
-            txtUserEmailField.setError(getResources().getString(R.string.invalid_email_error_text));
+            txtUserEmail.setError(getResources().getString(R.string.invalid_email_error_text));
             signInButton.setEnabled(true);
             return;
         }

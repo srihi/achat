@@ -27,6 +27,8 @@ import com.dankira.achat.api.WebApiEndPointInterface;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -37,24 +39,24 @@ public class ShareListActivity extends SecuredAppCompatActivityBase
     public static final String SHARE_CODE_PARAM_KEY = "share_code_param";
     public static final String KEY_ERROR_MESSAGE = "error_message_param";
     private static final String LOG_TAG = ShareListActivity.class.getSimpleName();
-    private ImageView imgQRCode;
-    private TextView txtShareCode;
-    private Button btnNewShareCode;
-    private CoordinatorLayout coordLayout;
     private AccountManager accountManager;
     private String listGuid = "";
+
+    @BindView(R.id.img_share_qr_code)
+    private ImageView imgQRCode;
+    @BindView(R.id.txt_share_code)
+    private TextView txtShareCode;
+    @BindView(R.id.btn_new_share_code)
+    private Button btnNewShareCode;
+    @BindView(R.id.share_list_activity_coord_layout)
+    private CoordinatorLayout coordLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_list);
-
-        accountManager = AccountManager.get(this);
-        imgQRCode = (ImageView) findViewById(R.id.img_share_qr_code);
-        txtShareCode = (TextView) findViewById(R.id.txt_share_code);
-        btnNewShareCode = (Button) findViewById(R.id.btn_new_share_code);
-        coordLayout = (CoordinatorLayout) findViewById(R.id.share_list_activity_coord_layout);
+        ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)

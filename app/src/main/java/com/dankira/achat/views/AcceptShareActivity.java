@@ -28,6 +28,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 
 public class AcceptShareActivity extends SecuredAppCompatActivityBase
@@ -35,23 +37,24 @@ public class AcceptShareActivity extends SecuredAppCompatActivityBase
     private static final String LOG_TAG = AcceptShareActivity.class.getSimpleName();
     public static final String KEY_ERROR_MESSAGE = "error_message_param";
     private static final String KEY_SHARE_ACCEPT_SUCCEEDED = "share_accept_succeeded_param";
-    private ImageButton btnScanQRCode;
-    private EditText editShareCode;
-    private Button btnSubmitShareCode;
-    private CoordinatorLayout coordinatorLayout;
     private AccountManager accountManager;
+
+    @BindView(R.id.btn_scan_qr_code)
+    private ImageButton btnScanQRCode;
+    @BindView(R.id.edit_share_code)
+    private EditText editShareCode;
+    @BindView(R.id.btn_submit_share_code)
+    private Button btnSubmitShareCode;
+    @BindView(R.id.accept_share_coord_layout)
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accept_share);
+        ButterKnife.bind(this);
         accountManager = AccountManager.get(this);
-
-        btnScanQRCode = (ImageButton) findViewById(R.id.btn_scan_qr_code);
-        btnSubmitShareCode = (Button) findViewById(R.id.btn_submit_share_code);
-        editShareCode = (EditText) findViewById(R.id.edit_share_code);
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.accept_share_coord_layout);
 
         btnScanQRCode.setOnClickListener(new View.OnClickListener()
         {

@@ -4,7 +4,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
 
@@ -73,6 +73,7 @@ dependencies {
     compile 'com.afollestad.material-dialogs:core:0.9.0.1'
     compile 'com.afollestad.material-dialogs:commons:0.9.0.1'
     compile 'com.squareup.picasso:picasso:2.4.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
     liteCompile 'com.google.android.gms:play-services:9.4.0'
     liteCompile 'com.google.firebase:firebase-ads:9.4.0'
 }

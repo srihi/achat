@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,26 +32,41 @@ import com.dankira.achat.utils.CryptoUtils;
 import com.dankira.achat.utils.PicassoCircleTransform;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ShoppingListActivity extends SecuredAppCompatActivityBase
         implements IShoppingListSelectedListener, IDialogSubmitListener
 {
     private static final String SL_DETAIL_FRAGMENT_TAG = "SLDETAILSFRAG";
+    private static final String SL_FRAGMENT_TAG = "SL_FRAGMENT_TAG";
     private boolean isTwoPaneLayout;
-    private DrawerLayout navDrawerLayout;
-
     private IRefreshListener refreshListener;
-    private NavigationView navigationView;
     private static final String GRAVATAR_BASE_URL = "https://www.gravatar.com/avatar/";
-
     public static final String EXTRA_LIST_GUID = "intent_extra_list_guid";
+
+    @BindView(R.id.main_activity_drawer_layout)
+    private DrawerLayout navDrawerLayout;
+    @BindView(R.id.navigation_view)
+    private NavigationView navigationView;
+    @BindView(R.id.shopping_list_toolbar)
+    private Toolbar toolbar;
+    @BindView(R.id.shopping_list_detail_frame)
+    private FrameLayout flShoppingListContainerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
-        navDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        ButterKnife.bind(this);
+
+        ShoppingListFragment slf = new ShoppingListFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.shopping_list_frame, slf, SL_FRAGMENT_TAG)
+                .commit();
+
         View navHeaderView = navigationView.getHeaderView(0);
         if (navHeaderView != null)
         {
@@ -86,7 +102,7 @@ public class ShoppingListActivity extends SecuredAppCompatActivityBase
             }
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.shopping_list_toolbar);
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
         {
@@ -95,7 +111,7 @@ public class ShoppingListActivity extends SecuredAppCompatActivityBase
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        if (findViewById(R.id.shopping_list_detail_frame) != null)
+        if (flShoppingListContainerLayout != null)
         {
             isTwoPaneLayout = true;
             if (savedInstanceState == null)
@@ -171,7 +187,6 @@ public class ShoppingListActivity extends SecuredAppCompatActivityBase
                     default:
                         break;
                 }
-
 
                 navDrawerLayout.closeDrawers();
                 return true;

@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 
 public class RegisterActivity extends AppCompatActivity
@@ -29,21 +31,31 @@ public class RegisterActivity extends AppCompatActivity
     public static final String KEY_ERROR_MESSAGE = "ERR_MSG";
     public static final String KEY_AUTH_TOKEN = "REGISTRATION TOKEN";
     private String accountType;
+
+    @BindView(R.id.btn_register)
     private Button btnRegister;
+    @BindView(R.id.edit_register_user_email)
+    private EditText txtUserEmailField;
+    @BindView(R.id.edit_register_user_password)
+    private EditText txtPasswordField;
+    @BindView(R.id.edit_register_user_repeatPassword)
+    private EditText txtRepeatPasswordField;
+    @BindView(R.id.edit_register_user_first_name)
+    private EditText txtFirstNameField;
+    @BindView(R.id.edit_register_user_lastName)
+    private EditText txtLastNameField;
+    @BindView(R.id.btn_already_member)
+    private Button btnAlreadyMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
 
         accountType = getIntent().getStringExtra(AchatAuthenticatorActivity.ARG_ACCOUNT_TYPE);
-
-        setContentView(R.layout.activity_register);
-
-        btnRegister = (Button) findViewById(R.id.btn_register);
-
-        findViewById(R.id.btn_already_member).setOnClickListener(new View.OnClickListener()
+        btnAlreadyMember.setOnClickListener(new View.OnClickListener()
         {
 
             @Override
@@ -53,7 +65,6 @@ public class RegisterActivity extends AppCompatActivity
                 finish();
             }
         });
-
         btnRegister.setOnClickListener(new View.OnClickListener()
         {
 
@@ -67,12 +78,6 @@ public class RegisterActivity extends AppCompatActivity
 
     private void createAccount()
     {
-        EditText txtUserEmailField = (EditText) findViewById(R.id.edit_register_user_email);
-        EditText txtPasswordField = (EditText) findViewById(R.id.edit_register_user_password);
-        EditText txtRepeatPasswordField = (EditText) findViewById(R.id.edit_register_user_repeatPassword);
-        EditText txtFirstNameField = (EditText) findViewById(R.id.edit_register_user_first_name);
-        EditText txtLastNameField = (EditText) findViewById(R.id.edit_register_user_lastName);
-
         final String userEmail = txtUserEmailField.getText().toString().trim();
         final String userPassword = txtPasswordField.getText().toString().trim();
         final String userRepeatPassword = txtRepeatPasswordField.getText().toString().trim();
@@ -187,10 +192,6 @@ public class RegisterActivity extends AppCompatActivity
     // validating password with retype password
     private boolean isValidPassword(String pass)
     {
-        if (pass != null && pass.length() > 6)
-        {
-            return true;
-        }
-        return false;
+        return pass != null && pass.length() > 6;
     }
 }

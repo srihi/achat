@@ -42,26 +42,35 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class ShoppingListFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>, IDialogSubmitListener, IRefreshListener
 {
     public static final String NEW_LIST_BUNDLE_KEY = "new_list_item";
     public static final String EDITED_LIST_BUNDLE_KEY = "edited_list_item";
     private static final int ACHAT_CURSOR_ID = 100;
-    private static final String[] SHOPPING_LIST_PROJECTION = {
-            AchatDbContracts.ShoppingListTable._ID,
-            AchatDbContracts.ShoppingListTable.LIST_TITLE,
-            AchatDbContracts.ShoppingListTable.LIST_DESCRIPTION,
-            AchatDbContracts.ShoppingListTable.LIST_CREATED_ON,
-            AchatDbContracts.ShoppingListTable.LIST_SHARE_STATUS
-    };
     private ShoppingListCursorAdapter shoppingListAdapter;
     private IShoppingListSelectedListener selectedListener;
-    private SwipeRefreshLayout shopping_list_swipe_refresh_layout;
 
+    @BindView(R.id.shopping_list_swipe_refresh)
+    private SwipeRefreshLayout shopping_list_swipe_refresh_layout;
+    @BindView(R.id.add_first_list_button)
     private AppCompatImageButton addFirstListImageButton;
+    @BindView(R.id.shopping_list_rv_container)
     private FrameLayout recyclerViewContainerLayout;
+    @BindView(R.id.empty_list_placeholder)
     private FrameLayout emptyListPlaceHolder;
+    @BindView(R.id.shopping_list_recycler_view)
+    private RecyclerView recyclerView;
+    @BindView(R.id.add_new_list)
+    private FloatingActionButton addNewList;
+    @BindView(R.id.adView)
+    private AdView mAdView;
+
+    private Unbinder unbinder;
 
     @Override
     public void onAttach(Context context)
@@ -76,29 +85,25 @@ public class ShoppingListFragment extends Fragment
             {
                 parentActivity.setRefreshListener(this);
             }
-
         }
         catch (ClassCastException exception)
         {
-
         }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
-        super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(ACHAT_CURSOR_ID, null, this);
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_shopping_list, container, false);
-        FloatingActionButton addNewList = (FloatingActionButton) rootView.findViewById(R.id.add_new_list);
-        addFirstListImageButton = (AppCompatImageButton) rootView.findViewById(R.id.add_first_list_button);
-        emptyListPlaceHolder = (FrameLayout) rootView.findViewById(R.id.empty_list_placeholder);
-        recyclerViewContainerLayout = (FrameLayout) rootView.findViewById(R.id.shopping_list_rv_container);
+        unbinder = ButterKnife.bind(this, rootView);
+
         addNewList.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -115,11 +120,9 @@ public class ShoppingListFragment extends Fragment
                 showAddNewListDialog();
             }
         });
-
         shoppingListAdapter = new ShoppingListCursorAdapter(getActivity(), null);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.shopping_list_recycler_view);
-        final ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView);
 
+        final ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView);
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener()
         {
             @Override
@@ -143,11 +146,11 @@ public class ShoppingListFragment extends Fragment
                 return false;
             }
         });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), R.drawable.shopping_list_divider));
         recyclerView.setAdapter(shoppingListAdapter);
 
-        shopping_list_swipe_refresh_layout = (SwipeRefreshLayout) rootView.findViewById(R.id.shopping_list_swipe_refresh);
         shopping_list_swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -159,14 +162,12 @@ public class ShoppingListFragment extends Fragment
 
         shopping_list_swipe_refresh_layout.setColorSchemeResources(R.color.icon_color_default);
 
-        MobileAds.initialize(getActivity().getApplicationContext(),getResources().getString(R.string.banner_ad_unit_id));
-        AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+        MobileAds.initialize(getActivity().getApplicationContext(), getResources().getString(R.string.banner_ad_unit_id));
+
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        if(savedInstanceState == null){
-            onRefresh();
-        }
+        onRefresh();
 
         return rootView;
     }
@@ -252,9 +253,9 @@ public class ShoppingListFragment extends Fragment
     public Loader<Cursor> onCreateLoader(int id, Bundle args)
     {
         Uri shoppingListUri = AchatDbContracts.ShoppingListTable.CONTENT_URI;
-
-        return new CursorLoader(getActivity(), shoppingListUri, SHOPPING_LIST_PROJECTION,
+        CursorLoader cursorLoader = new CursorLoader(getActivity(), shoppingListUri, null,
                 null, null, AchatDbContracts.ShoppingListTable.DEFAULT_SORT_ORDER);
+        return cursorLoader;
     }
 
     @Override
@@ -341,5 +342,12 @@ public class ShoppingListFragment extends Fragment
                 getLoaderManager().restartLoader(ACHAT_CURSOR_ID, null, ShoppingListFragment.this);
             }
         }.execute();
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

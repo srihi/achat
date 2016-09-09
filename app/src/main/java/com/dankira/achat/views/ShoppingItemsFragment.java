@@ -44,6 +44,10 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class ShoppingItemsFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>, IDialogSubmitListener
 {
@@ -68,12 +72,19 @@ public class ShoppingItemsFragment extends Fragment
     public static final String DEFAULT_ITEM_QTY = "1";
     private String shoppingListId;
     private ShoppingItemCursorAdapter shoppingItemCursorAdapter;
-    TextView itemBarCode;
 
+    @BindView(R.id.add_new_item)
     private FloatingActionButton addNewItem;
+    @BindView(R.id.shopping_items_rv_container)
     private FrameLayout itemsRecyclerViewContainer;
+    @BindView(R.id.empty_items_placeholder)
     private LinearLayout emptyItemsContainer;
+    @BindView(R.id.shopping_items_swipe_refresh)
     private SwipeRefreshLayout shopping_items_swipe_refresh_layout;
+    @BindView(R.id.shopping_items_recycler_view)
+    private RecyclerView recyclerView;
+
+    private Unbinder unbinder;
 
     public static ShoppingItemsFragment newInstance(String shoppingListId)
     {
@@ -97,18 +108,7 @@ public class ShoppingItemsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_shopping_items, container, false);
-        itemsRecyclerViewContainer = (FrameLayout) rootView.findViewById(R.id.shopping_items_rv_container);
-        emptyItemsContainer = (LinearLayout) rootView.findViewById(R.id.empty_items_placeholder);
-        addNewItem = (FloatingActionButton) rootView.findViewById(R.id.add_new_item);
-        addNewItem.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                showNewItemDialog();
-
-            }
-        });
+        unbinder = ButterKnife.bind(this, rootView);
 
         Bundle args = getArguments();
 
@@ -117,9 +117,17 @@ public class ShoppingItemsFragment extends Fragment
             shoppingListId = args.getString(SHOPPING_LIST_ID_KEY);
         }
 
+        addNewItem.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showNewItemDialog();
+            }
+        });
 
         shoppingItemCursorAdapter = new ShoppingItemCursorAdapter(getActivity(), null);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.shopping_items_recycler_view);
+
         final ItemClickSupport itemClickSupport = ItemClickSupport.addTo(recyclerView);
 
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener()
@@ -144,7 +152,6 @@ public class ShoppingItemsFragment extends Fragment
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), R.drawable.shopping_item_divider));
         recyclerView.setAdapter(shoppingItemCursorAdapter);
 
-        shopping_items_swipe_refresh_layout = (SwipeRefreshLayout) rootView.findViewById(R.id.shopping_items_swipe_refresh);
         shopping_items_swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -189,7 +196,7 @@ public class ShoppingItemsFragment extends Fragment
         final ImageButton scanBarCode = (ImageButton) dialog.getCustomView().findViewById(R.id.btn_scan_item_barcode);
         final ImageButton qtyPlusOneButton = (ImageButton) dialog.getCustomView().findViewById(R.id.btn_item_qty_plus_one);
         final TextView itemQtyText = (TextView) dialog.getCustomView().findViewById(R.id.new_item_qty);
-        itemBarCode = (TextView) dialog.getCustomView().findViewById(R.id.txt_item_barcode);
+        final TextView itemBarCode = (TextView) dialog.getCustomView().findViewById(R.id.txt_item_barcode);
         itemQtyText.setText(DEFAULT_ITEM_QTY);
         itemTitleInput.addTextChangedListener(new TextWatcher()
         {
@@ -300,7 +307,7 @@ public class ShoppingItemsFragment extends Fragment
         }
         else
         {
-            itemBarCode.setText(itemBarCodeScanned);
+            //itemBarCode.setText(itemBarCodeScanned);
         }
 
         //3. if the item does not exist, then open the add item list with a barcode already filled.
@@ -398,7 +405,7 @@ public class ShoppingItemsFragment extends Fragment
 
     public void onReloadItems()
     {
-        new AsyncTask<String,Void,Void>()
+        new AsyncTask<String, Void, Void>()
         {
             @Override
             protected Void doInBackground(String... strings)
@@ -413,9 +420,16 @@ public class ShoppingItemsFragment extends Fragment
             @Override
             protected void onPostExecute(Void v)
             {
-                if(getLoaderManager() != null)
+                if (getLoaderManager() != null)
                     getLoaderManager().restartLoader(ACHAT_ITEMS_CURSOR_ID, null, ShoppingItemsFragment.this);
             }
         }.execute();
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

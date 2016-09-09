@@ -7,5 +7,5 @@ import android.view.View;
  */
 public interface IShoppingListSelectedListener
 {
-    public void OnShoppingListSelected(String list_guid, View view);
+    void OnShoppingListSelected(String list_guid, View view);
 }

@@ -12,6 +12,9 @@ import com.dankira.achat.R;
 import com.dankira.achat.models.ShoppingList;
 import com.dankira.achat.provider.AchatDbContracts;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by skyfishjy on 10/31/14.
  */
@@ -32,16 +35,15 @@ public class ShoppingListCursorAdapter extends CursorRecyclerViewAdapter<Shoppin
     {
         Cursor currentCursor = getCursor();
 
-        if(currentCursor !=null && currentCursor.moveToPosition(position))
+        if (currentCursor != null && currentCursor.moveToPosition(position))
         {
             boolean isShared = currentCursor.getInt(currentCursor.getColumnIndex(AchatDbContracts.ShoppingListTable.LIST_SHARE_STATUS)) == 1;
-            if(isShared)
+            if (isShared)
                 return VIEW_HOLDER_TYPE_1;
         }
 
         return VIEW_HOLDER_TYPE_2;
     }
-
 
 
     @Override
@@ -65,15 +67,15 @@ public class ShoppingListCursorAdapter extends CursorRecyclerViewAdapter<Shoppin
 
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
+        @BindView(R.id.txt_shopping_list_title)
         public TextView shoppingListTitle;
+        @BindView(R.id.txt_shopping_list_item_count)
         public TextView shoppingListItemCount;
 
         public ViewHolder(View view)
         {
             super(view);
-
-            shoppingListTitle = (TextView) view.findViewById(R.id.txt_shopping_list_title);
-            shoppingListItemCount = (TextView) view.findViewById(R.id.txt_shopping_list_item_count);
+            ButterKnife.bind(this, view);
         }
     }
 }
