@@ -54,7 +54,8 @@
             android.support.design:fabSize="normal"
             app:backgroundTint="@color/accent"
             app:borderWidth="2dp"
-            app:elevation="2dp"/>
+            app:elevation="2dp"
+            android:contentDescription="@string/cd_add_new_list"/>
     </FrameLayout>
 
     <FrameLayout
@@ -71,6 +72,7 @@
             android:background="@drawable/add_first_list_button_bg"
             android:backgroundTint="@null"
             android:src="@drawable/icon_add"
+            android:contentDescription="@string/cd_add_first_list_button"
             />
     </FrameLayout>
 </FrameLayout>

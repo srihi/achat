@@ -41,13 +41,14 @@ public class ShoppingItemCursorAdapter extends CursorRecyclerViewAdapter<Shoppin
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor)
     {
         ShoppingItem item = ShoppingItem.fromCursor(cursor);
+        String checkedItem_cd = currentContext.getResources().getString(R.string.cd_is_item_checked);
 
         viewHolder.isItemChecked.setText(item.getItemTitle());
 
-        if(item.getItemQuantity() > 1)
+        if (item.getItemQuantity() > 1)
         {
             String listItemsCountFormat = currentContext.getResources().getString(R.string.list_items_count_formatted);
-            String listItemCount = String.format(Locale.US, listItemsCountFormat,item.getItemQuantity());
+            String listItemCount = String.format(Locale.US, listItemsCountFormat, item.getItemQuantity());
 
             viewHolder.shoppingItemQty.setText(listItemCount);
         }
@@ -57,6 +58,8 @@ public class ShoppingItemCursorAdapter extends CursorRecyclerViewAdapter<Shoppin
         }
 
         viewHolder.isItemChecked.setChecked(item.isItemChecked());
+
+        viewHolder.isItemChecked.setContentDescription(item.getItemQuantity() + " " + item.getItemTitle() + " " + (item.isItemChecked() ? checkedItem_cd : ""));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder

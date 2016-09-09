@@ -64,9 +64,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:background="@drawable/textview_border_black"
+                android:contentDescription="@string/edit_QR_hint_label"
+                android:focusable="true"
                 android:hint="@string/edit_QR_hint_label"
                 android:inputType="number"
                 android:maxLines="1"
+                android:nextFocusDown="@id/btn_submit_share_code"
                 android:padding="@dimen/txt_field_defaultPadding"
                 android:singleLine="true"
                 />
@@ -77,6 +80,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:background="@null"
+                android:contentDescription="@string/cd_btn_scan_qr_code"
+                android:focusable="true"
                 android:padding="@dimen/form_button_padding"
                 android:src="@drawable/icon_qrcode_scan"/>
         </RelativeLayout>
@@ -88,6 +93,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/btn_login_margin"
             android:layout_marginTop="@dimen/btn_login_margin"
+            android:contentDescription="@string/cd_btn_submit_share_code"
+            android:focusable="true"
+            android:nextFocusUp="@id/edit_share_code"
             android:padding="@dimen/form_button_padding"
             android:text="@string/enter_share_code_btn_label"/>
 

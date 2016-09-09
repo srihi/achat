@@ -41,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:contentDescription="@string/cd_share_qr_image"/>
 
         <TextView
             android:id="@+id/txt_share_code"
@@ -57,7 +58,8 @@
             android:textAllCaps="true"
             android:textColor="@color/primary_text"
             android:textSize="44sp"
-            android:textStyle="normal"/>
+            android:textStyle="normal"
+            />
 
         <Button
             android:id="@+id/btn_new_share_code"
@@ -65,6 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/btn_margin_default"
+            android:contentDescription="@string/cd_btn_generate_new_share_code"
             android:padding="@dimen/btn_padding_default"
             android:text="@string/btn_refresh_qr_label"/>
 

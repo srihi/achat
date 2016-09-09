@@ -31,6 +31,7 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/cd_add_new_item"
             android:src="@drawable/icon_add"
             android:stateListAnimator="@anim/fab_button_animation_default"
             android:tint="@color/icons"

@@ -63,6 +63,8 @@ public class ShoppingListCursorAdapter extends CursorRecyclerViewAdapter<Shoppin
         String itemsCountFormatted = currentContext.getResources().getQuantityString(R.plurals.items_count_formatted, itemCount, itemCount);
         viewHolder.shoppingListItemCount.setText(itemsCountFormatted);
         viewHolder.shoppingListTitle.setText(list.getListTitle());
+
+        viewHolder.shoppingListTitle.setContentDescription(list.getListTitle() + " "+itemsCountFormatted);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder
